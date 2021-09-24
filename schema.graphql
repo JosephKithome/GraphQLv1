@@ -1,0 +1,77 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type CategoryType {
+  id: ID!
+  name: String!
+  extraField: String
+}
+
+type CreatePerson {
+  ok: Boolean
+  person: Person
+}
+
+type CreatePetMutation {
+  pet: PetType
+}
+
+type DjangoDebug {
+  sql: [DjangoDebugSQL]
+}
+
+type DjangoDebugSQL {
+  vendor: String!
+  alias: String!
+  sql: String
+  duration: Float!
+  rawSql: String!
+  params: String!
+  startTime: Float!
+  stopTime: Float!
+  isSlow: Boolean!
+  isSelect: Boolean!
+  transId: String
+  transStatus: String
+  isoLevel: String
+  encoding: String
+}
+
+type IngredientType {
+  id: ID!
+  name: String!
+  notes: String!
+  category: CategoryType!
+}
+
+type Mutation {
+  updatePet(id: ID, kind: String!): UpdatePetMutation
+  createPet(kind: String!): CreatePetMutation
+  createPerson(name: String): CreatePerson
+}
+
+type Person {
+  name: String
+  age: Int
+}
+
+type PetType {
+  id: ID!
+  kind: String!
+}
+
+type Query {
+  allCategories: [CategoryType!]
+  categoryByName(name: String!): CategoryType
+  categoryById(id: String): CategoryType
+  allIngredients: [IngredientType]
+  allIngredientsadvanced: [IngredientType!]
+  allPets: [PetType]
+  _debug: DjangoDebug
+}
+
+type UpdatePetMutation {
+  pet: PetType
+}
